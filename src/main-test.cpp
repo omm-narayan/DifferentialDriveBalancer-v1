@@ -174,14 +174,15 @@ static void printStatus() {
 static void handleCommand(String cmd) {
     cmd.trim();
 
-    // Movement commands (single uppercase letter)
+    // Movement commands are uppercase only, so single-letter lowercase
+    // commands like 'r' (reset integrals) don't get read as R (turn right).
     String upper = cmd;
     upper.toUpperCase();
-    if      (upper == "F") { moveCmd = MOVE_FWD;   moveUntil = millis() + CMD_HOLD_MS; commandedSpeedTarget =  MANUAL_SPEED; btPrint(F(">>FWD"));   return; }
-    else if (upper == "B") { moveCmd = MOVE_BWD;   moveUntil = millis() + CMD_HOLD_MS; commandedSpeedTarget = -MANUAL_SPEED; btPrint(F(">>BWD"));   return; }
-    else if (upper == "L") { moveCmd = MOVE_LEFT;  moveUntil = millis() + CMD_HOLD_MS; btPrint(F(">>LEFT"));  return; }
-    else if (upper == "R") { moveCmd = MOVE_RIGHT; moveUntil = millis() + CMD_HOLD_MS; btPrint(F(">>RIGHT")); return; }
-    else if (upper == "S")  { moveCmd = MOVE_NONE; commandedSpeedTarget = 0; btPrint(F(">>STOP")); return; }
+    if      (cmd == "F") { moveCmd = MOVE_FWD;   moveUntil = millis() + CMD_HOLD_MS; commandedSpeedTarget =  MANUAL_SPEED; btPrint(F(">>FWD"));   return; }
+    else if (cmd == "B") { moveCmd = MOVE_BWD;   moveUntil = millis() + CMD_HOLD_MS; commandedSpeedTarget = -MANUAL_SPEED; btPrint(F(">>BWD"));   return; }
+    else if (cmd == "L") { moveCmd = MOVE_LEFT;  moveUntil = millis() + CMD_HOLD_MS; btPrint(F(">>LEFT"));  return; }
+    else if (cmd == "R") { moveCmd = MOVE_RIGHT; moveUntil = millis() + CMD_HOLD_MS; btPrint(F(">>RIGHT")); return; }
+    else if (cmd == "S")  { moveCmd = MOVE_NONE; commandedSpeedTarget = 0; btPrint(F(">>STOP")); return; }
     else if (upper == "ST") { printStatus(); return; }
     else if (upper == "?")  { printHelp();   return; }
 
